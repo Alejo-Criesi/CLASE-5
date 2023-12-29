@@ -8,44 +8,68 @@
 
 let items = document.querySelectorAll("li");
 
-let array = [];
+let listaDeLis = [];
 
 for (let index = 0; index < items.length; index++) {
-  let numeroLi = items[index].innerHTML;
-  let cambiaANumber = Number(numeroLi);
-  array.push(cambiaANumber);
+  let numeroLi = Number(items[index].innerHTML);
+  listaDeLis.push(numeroLi);
 }
 
 document.querySelector("#boton-promedio").onclick = function () {
-  let numeros = 0;
+  let contador = 0;
 
-  if (items.length === array.length) {
-    for (let index = 0; index < array.length; index++) {
-      numeros = numeros + array[index];
+  if (items.length === listaDeLis.length) {
+    for (let index = 0; index < listaDeLis.length; index++) {
+      contador = contador + listaDeLis[index];
 
-      if (index < array.length) {
-        let em = document.querySelector("#el-promedio");
-        let resultado = numeros / array.length;
-        em.innerHTML = resultado;
+      if (index < listaDeLis.length) {
+        let numeroPromedio = document.querySelector("#el-promedio");
+        let calculo = contador / listaDeLis.length;
+        numeroPromedio.innerHTML = calculo;
       }
     }
   }
-
   return false;
 };
 
 document.querySelector("#boton-numero-grande").onclick = function () {
-  let numeros = array[0];
+  let contador = listaDeLis[0];
 
-  for (let index = 0; index < array.length; index++) {
-    if (numeros <= array[index]) {
-      numeros = array[index];
+  for (let index = 0; index < listaDeLis.length; index++) {
+    if (contador <= listaDeLis[index]) {
+      contador = listaDeLis[index];
     }
-    if (index < array.length) {
-      let em = document.querySelector("#el-numero-grande");
-      em.innerHTML = numeros;
+    if (index < listaDeLis.length) {
+      let numeroMasGrande = document.querySelector("#el-numero-grande");
+      numeroMasGrande.innerHTML = contador;
     }
   }
   return false;
 };
+
+document.querySelector("#numero-que-mas-repite").onclick = function () {
+  let contador = {};
+  let maximoFrecuencia = 0;
+  let numeroMasRepetido;
+
+  for (let index = 0; index < listaDeLis.length; index++) {
+    const numero = listaDeLis[index];
+
+    contador[numero] = (contador[numero] || 0) + 1;
+
+    if (contador[numero] > maximoFrecuencia) {
+      maximoFrecuencia = contador[numero];
+      numeroMasRepetido = numero;
+    }
+
+    let masFrecuente = document.querySelector("#el-que-mas-se-repite");
+    masFrecuente.innerHTML =
+      "el numero que mas se repite es " +
+      numeroMasRepetido +
+      " que aparece " +
+      maximoFrecuencia +
+      " veces";
+  }
+
+  return false;
 };
